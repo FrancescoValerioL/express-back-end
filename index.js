@@ -31,6 +31,10 @@ app.get("/api/movie", (req, resp) => {
     });
 });
 
+app.get('/api/topRated', (req, resp) => {
+  const axios = require('axios').default
+})
+
 app.get("/api/datiFilm", (req, resp) => {
   const axios = require("axios").default;
   const idFilm = req.query.idFilm;
