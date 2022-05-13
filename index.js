@@ -35,6 +35,44 @@ app.get('/api/movie' ,  (req , resp) =>{
   })
 })
 
+app.get('/api/datiFilm', (req,resp) => {
+  const axios = require('axios').default;
+  const idFilm = req.query.idFilm
+
+  const dati = {
+    title:"",
+    original_title:"",
+    img:"https://image.tmdb.org/t/p/w500",
+    genres: [],
+    overview:"",
+    vote:0,
+    release_date:"",
+  }
+
+  axios.get(`https://api.themoviedb.org/3/movie/${idFilm}`,{
+    params:{
+      api_key: '205712c8b4bad38dc18a8f9c83c0f88e',
+      language: 'it-IT',
+    }
+  })
+  .then(function (response) {
+    // handle success
+    console.log(response);
+    dati.title = response.data.title
+    dati.original_title = response.data.original_title
+    dati.img = dati.img + response.data.poster_path
+    dati.genres = response.data.genres
+    dati.overview = response.data.overview
+    dati.vote = response.data.vote_average
+    dati.release_date = response.data.release_date
+    resp.send(dati)
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })  
+})
+
 app.get('/api/collection',  (req, resp) => {
   const axios = require('axios').default;
   axios.get("https://api.themoviedb.org/3/genre/movie/list",{
