@@ -31,9 +31,52 @@ app.get("/api/movie", (req, resp) => {
     });
 });
 
-app.get('/api/topRated', (req, resp) => {
-  const axios = require('axios').default
-})
+app.get("/api/trendingWeek", (req, resp) => {
+  const axios = require("axios").default;
+  const img = "https://image.tmdb.org/t/p/w500";
+  let films = [];
+  axios
+    .get("https://api.themoviedb.org/3/trending/movie/week", {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+      },
+    })
+    .then(function (response) {
+      films = response.data.results.map((elem) => ({
+        title: elem.title,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }));
+      resp.send(films);
+    });
+});
+
+app.get("/api/topRated", (req, resp) => {
+  const axios = require("axios").default;
+  const img = "https://image.tmdb.org/t/p/w500";
+  let films = [];
+  axios
+    .get("https://api.themoviedb.org/3/movie/top_rated", {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        page: 1,
+      },
+    })
+    .then(function (response) {
+      films = response.data.results.map((elem) => ({
+        title: elem.title,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }));
+      resp.send(films);
+    });
+});
 
 app.get("/api/datiFilm", (req, resp) => {
   const axios = require("axios").default;
