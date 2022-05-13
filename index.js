@@ -75,7 +75,6 @@ app.get("/api/ricercaTitolo", (req, resp) => {
   const titolo = req.query.titolo;
   let films = [];
   const img = "https://image.tmdb.org/t/p/w500";
-  console.log("Inizio");
 
   axios
     .get("https://api.themoviedb.org/3/search/movie", {
@@ -95,7 +94,6 @@ app.get("/api/ricercaTitolo", (req, resp) => {
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
       }));
-      console.log(films);
       resp.send(films);
     })
     .catch(function (error) {
