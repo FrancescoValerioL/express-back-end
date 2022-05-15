@@ -69,6 +69,90 @@ app.get('/api/tv/ricercaTitolo', (req, resp) => {
       console.log(error);
     });
 })
+app.get('/api/tv/popular', (req,resp) => {
+  const axios = require('axios').default
+  const titolo = req.query.titolo
+  let series = []
+  const img = 'https://image.tmdb.org/t/p/w500'
+
+  axios
+    .get('https://api.themoviedb.org/3/tv/popular', {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        query: titolo,
+        page: 1,
+        include_adult: false,
+      }
+    })
+    .then(function (response){
+      series = response.data.results.map((elem) => ({
+        title: elem.name,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }))
+      resp.send(series)
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+})
+app.get('/api/tv/topRated', (req,resp) => {
+  const axios = require('axios').default
+  const titolo = req.query.titolo
+  let series = []
+  const img = 'https://image.tmdb.org/t/p/w500'
+
+  axios
+    .get('https://api.themoviedb.org/3/tv/top_rated', {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        query: titolo,
+        page: 1,
+        include_adult: false,
+      }
+    })
+    .then(function (response){
+      series = response.data.results.map((elem) => ({
+        title: elem.name,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }))
+      resp.send(series)
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+})
+app.get("/api/tv/trendingWeek", (req, resp) => {
+  const axios = require("axios").default;
+  const img = "https://image.tmdb.org/t/p/w500";
+  let films = [];
+  axios
+    .get("https://api.themoviedb.org/3/trending/tv/week", {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+      },
+    })
+    .then(function (response) {
+      films = response.data.results.map((elem) => ({
+        title: elem.name,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }));
+      resp.send(films);
+    });
+});
 
 // API MOVIE
 app.get("/api/movie", (req, resp) => {
