@@ -374,6 +374,7 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
   const axios = require("axios").default;
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre.toLowerCase();
+  const img = 'https://image.tmdb.org/t/p/w500'
   let genres = new Map()
   genres.set('azione', '28')
   genres.set('avventura', '12')
@@ -408,9 +409,15 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
     })
     .then(function (response) {
       // handle success
-      console.log(response);
+      movies = response.data.results.map((elem) => ({
+        title: elem.title,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }))
 
-      resp.send(response.data);
+      resp.send(movies);
     })
     .catch(function (error) {
       // handle error
