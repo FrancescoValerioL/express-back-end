@@ -3,10 +3,40 @@ const express = require("express");
 const app = express();
 const port = 2000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+//API TV SERIES
+app.get('/api/tv/ricercaTitolo', (req, resp) => {
+  const axios = require('axios').default
+  const titolo = req.query.titolo
+  let series = []
+  const img = 'https://image.tmdb.org/t/p/w500'
 
+  axios
+    .get('https://api.themoviedb.org/3/search/tv', {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        query: titolo,
+        page: 1,
+        include_adult: false,
+      }
+    })
+    .then(function (response){
+      series = response.data.results.map((elem) => ({
+        title: elem.name,
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+      }))
+      resp.send(series)
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+})
+
+// API MOVIE
 app.get("/api/movie", (req, resp) => {
   console.log("CALLING MOVIE ");
   const country = req.query.country;
@@ -31,7 +61,7 @@ app.get("/api/movie", (req, resp) => {
     });
 });
 
-app.get("/api/trendingWeek", (req, resp) => {
+app.get("/api/movie/trendingWeek", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
   let films = [];
@@ -54,7 +84,7 @@ app.get("/api/trendingWeek", (req, resp) => {
     });
 });
 
-app.get("/api/topRated", (req, resp) => {
+app.get("/api/movie/topRated", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
   let films = [];
@@ -78,7 +108,7 @@ app.get("/api/topRated", (req, resp) => {
     });
 });
 
-app.get("/api/datiFilm", (req, resp) => {
+app.get("/api/movie/datiFilm", (req, resp) => {
   const axios = require("axios").default;
   const idFilm = req.query.idFilm;
 
@@ -117,7 +147,7 @@ app.get("/api/datiFilm", (req, resp) => {
     });
 });
 
-app.get("/api/ricercaTitolo", (req, resp) => {
+app.get("/api/movie/ricercaTitolo", (req, resp) => {
   const axios = require("axios").default;
   const titolo = req.query.titolo;
   let films = [];
@@ -149,7 +179,7 @@ app.get("/api/ricercaTitolo", (req, resp) => {
     });
 });
 
-app.get("/api/collection", (req, resp) => {
+app.get("/api/movie/collection", (req, resp) => {
   const axios = require("axios").default;
   axios
     .get("https://api.themoviedb.org/3/genre/movie/list", {
@@ -170,7 +200,7 @@ app.get("/api/collection", (req, resp) => {
     });
 });
 
-app.get("/api/ricercaPerGenere", (req, resp) => {
+app.get("/api/movie/ricercaPerGenere", (req, resp) => {
   const axios = require("axios").default;
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre;
