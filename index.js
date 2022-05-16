@@ -4,23 +4,23 @@ const app = express();
 const port = 2000;
 
 //MULTI SEARCH
-app.get('/api/tv/ricercaMulti', (req, resp) => {
-  const axios = require('axios').default
-  const titolo = req.query.titolo
-  let found = []
-  const img = 'https://image.tmdb.org/t/p/w500'
+app.get("/api/tv/ricercaMulti", (req, resp) => {
+  const axios = require("axios").default;
+  const titolo = req.query.titolo;
+  let found = [];
+  const img = "https://image.tmdb.org/t/p/w500";
 
   axios
-    .get('https://api.themoviedb.org/3/search/multi', {
+    .get("https://api.themoviedb.org/3/search/multi", {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
         query: titolo,
         page: 1,
         include_adult: false,
-      }
+      },
     })
-    .then(function (response){
+    .then(function (response) {
       found = response.data.results.map((elem) => ({
         title: elem.name,
         title: elem.title,
@@ -28,109 +28,109 @@ app.get('/api/tv/ricercaMulti', (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
-      resp.send(found)
+      }));
+      resp.send(found);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
-})
+});
 
 //API TV SERIES
-app.get('/api/tv/ricercaTitolo', (req, resp) => {
-  const axios = require('axios').default
-  const titolo = req.query.titolo
-  let series = []
-  const img = 'https://image.tmdb.org/t/p/w500'
+app.get("/api/tv/ricercaTitolo", (req, resp) => {
+  const axios = require("axios").default;
+  const titolo = req.query.titolo;
+  let series = [];
+  const img = "https://image.tmdb.org/t/p/w500";
 
   axios
-    .get('https://api.themoviedb.org/3/search/tv', {
+    .get("https://api.themoviedb.org/3/search/tv", {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
         query: titolo,
         page: 1,
         include_adult: false,
-      }
+      },
     })
-    .then(function (response){
+    .then(function (response) {
       series = response.data.results.map((elem) => ({
         title: elem.name,
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
-      resp.send(series)
+      }));
+      resp.send(series);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
-})
-app.get('/api/tv/popular', (req,resp) => {
-  const axios = require('axios').default
-  const titolo = req.query.titolo
-  let series = []
-  const img = 'https://image.tmdb.org/t/p/w500'
+});
+app.get("/api/tv/popular", (req, resp) => {
+  const axios = require("axios").default;
+  const titolo = req.query.titolo;
+  let series = [];
+  const img = "https://image.tmdb.org/t/p/w500";
 
   axios
-    .get('https://api.themoviedb.org/3/tv/popular', {
+    .get("https://api.themoviedb.org/3/tv/popular", {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
         query: titolo,
         page: 1,
         include_adult: false,
-      }
+      },
     })
-    .then(function (response){
+    .then(function (response) {
       series = response.data.results.map((elem) => ({
         title: elem.name,
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
-      resp.send(series)
+      }));
+      resp.send(series);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
-})
-app.get('/api/tv/topRated', (req,resp) => {
-  const axios = require('axios').default
-  const titolo = req.query.titolo
-  let series = []
-  const img = 'https://image.tmdb.org/t/p/w500'
+});
+app.get("/api/tv/topRated", (req, resp) => {
+  const axios = require("axios").default;
+  const titolo = req.query.titolo;
+  let series = [];
+  const img = "https://image.tmdb.org/t/p/w500";
 
   axios
-    .get('https://api.themoviedb.org/3/tv/top_rated', {
+    .get("https://api.themoviedb.org/3/tv/top_rated", {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
         query: titolo,
         page: 1,
         include_adult: false,
-      }
+      },
     })
-    .then(function (response){
+    .then(function (response) {
       series = response.data.results.map((elem) => ({
         title: elem.name,
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
-      resp.send(series)
+      }));
+      resp.send(series);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
-})
+});
 app.get("/api/tv/trendingWeek", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
@@ -153,34 +153,34 @@ app.get("/api/tv/trendingWeek", (req, resp) => {
       resp.send(films);
     });
 });
-app.get('/api/tv/ricercaperGenere', (req, resp) => {
-  const axios = require('axios').default
+app.get("/api/tv/ricercaperGenere", (req, resp) => {
+  const axios = require("axios").default;
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre.toLowerCase();
-  const img = 'https://image.tmdb.org/t/p/w500'
-  let series = []
-  let genres = new Map()
-  genres.set('azione', '10759')
-  genres.set('avventura', '10759')
-  genres.set('animazione', '16')
-  genres.set('commedia', '35')
-  genres.set('crime', '80')
-  genres.set('documentario', '99')
-  genres.set('dramma', '18')
-  genres.set('famiglia', '10751')
-  genres.set('kids', '10762')
-  genres.set('mistero', '9648')
-  genres.set('news', '10763')
-  genres.set('reality', '10764')
-  genres.set('fci-fi', '10765')
-  genres.set('fantasy', '10765')
-  genres.set('soap', '10766')
-  genres.set('talk', '10767')
-  genres.set('war', '10768')
-  genres.set('politics', '10768')
-  genres.set('western', '37')
+  const img = "https://image.tmdb.org/t/p/w500";
+  let series = [];
+  let genres = new Map();
+  genres.set("azione", "10759");
+  genres.set("avventura", "10759");
+  genres.set("animazione", "16");
+  genres.set("commedia", "35");
+  genres.set("crime", "80");
+  genres.set("documentario", "99");
+  genres.set("dramma", "18");
+  genres.set("famiglia", "10751");
+  genres.set("kids", "10762");
+  genres.set("mistero", "9648");
+  genres.set("news", "10763");
+  genres.set("reality", "10764");
+  genres.set("fci-fi", "10765");
+  genres.set("fantasy", "10765");
+  genres.set("soap", "10766");
+  genres.set("talk", "10767");
+  genres.set("war", "10768");
+  genres.set("politics", "10768");
+  genres.set("western", "37");
   axios
-    .get('https://api.themoviedb.org/3/discover/tv', {
+    .get("https://api.themoviedb.org/3/discover/tv", {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
@@ -188,23 +188,23 @@ app.get('/api/tv/ricercaperGenere', (req, resp) => {
         page: selectedPage,
         with_genres: genres.get(selectedGenre),
         include_null_first_air_dates: false,
-      }
+      },
     })
-    .then(function(response) {
+    .then(function (response) {
       series = response.data.results.map((elem) => ({
         title: elem.name,
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
-      resp.send(series)
+      }));
+      resp.send(series);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
-})
+});
 
 // API MOVIE
 app.get("/api/movie", (req, resp) => {
@@ -257,6 +257,7 @@ app.get("/api/movie/trendingWeek", (req, resp) => {
 app.get("/api/movie/topRated", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
+  const imgb = "https://image.tmdb.org/t/p/original";
   let films = [];
   axios
     .get("https://api.themoviedb.org/3/movie/top_rated", {
@@ -273,6 +274,7 @@ app.get("/api/movie/topRated", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        backdrop_img: imgb + elem.backdrop_path,
       }));
       resp.send(films);
     });
@@ -374,28 +376,28 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
   const axios = require("axios").default;
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre.toLowerCase();
-  const img = 'https://image.tmdb.org/t/p/w500'
-  let genres = new Map()
-  genres.set('azione', '28')
-  genres.set('avventura', '12')
-  genres.set('animazione', '16')
-  genres.set('commedia', '35')
-  genres.set('crime', '80')
-  genres.set('documentario', '90')
-  genres.set('dramma', '18')
-  genres.set('famiglia', '10751')
-  genres.set('fantasy', '14')
-  genres.set('storia', '36')
-  genres.set('horror', '27')
-  genres.set('musica', '10402')
-  genres.set('mistero', '9648')
-  genres.set('romance', '10749')
-  genres.set('fantascienza', '878')
-  genres.set('sci-fi', '878')
-  genres.set('film', '10770')
-  genres.set('thriller', '53')
-  genres.set('guerra', '10752')
-  genres.set('western', '37')
+  const img = "https://image.tmdb.org/t/p/w500";
+  let genres = new Map();
+  genres.set("azione", "28");
+  genres.set("avventura", "12");
+  genres.set("animazione", "16");
+  genres.set("commedia", "35");
+  genres.set("crime", "80");
+  genres.set("documentario", "90");
+  genres.set("dramma", "18");
+  genres.set("famiglia", "10751");
+  genres.set("fantasy", "14");
+  genres.set("storia", "36");
+  genres.set("horror", "27");
+  genres.set("musica", "10402");
+  genres.set("mistero", "9648");
+  genres.set("romance", "10749");
+  genres.set("fantascienza", "878");
+  genres.set("sci-fi", "878");
+  genres.set("film", "10770");
+  genres.set("thriller", "53");
+  genres.set("guerra", "10752");
+  genres.set("western", "37");
   axios
     .get("https://api.themoviedb.org/3/discover/movie", {
       params: {
@@ -415,7 +417,7 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
-      }))
+      }));
 
       resp.send(movies);
     })
