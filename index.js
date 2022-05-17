@@ -55,6 +55,7 @@ app.get("/api/tv/ricercaMulti", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(found);
     })
@@ -88,6 +89,7 @@ app.get("/api/tv/ricercaTitolo", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(series);
     })
@@ -117,6 +119,7 @@ app.get("/api/tv/popular", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(series);
     })
@@ -148,6 +151,7 @@ app.get("/api/tv/topRated", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(series);
     })
@@ -174,6 +178,7 @@ app.get("/api/tv/trendingWeek", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(films);
     })
@@ -226,6 +231,7 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(series);
     })
@@ -236,29 +242,6 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
 });
 
 // API MOVIE
-app.get("/api/movie", (req, resp) => {
-  console.log("CALLING MOVIE ");
-  const country = req.query.country;
-  const axios = require("axios").default;
-  // Make a request for a user with a given ID
-  axios
-    .get("https://api.themoviedb.org/3/trending/movie/week", {
-      params: {
-        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
-        language: "it-IT",
-      },
-    })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-
-      resp.send(response.data);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-});
 
 app.get("/api/movie/trendingWeek", (req, resp) => {
   const axios = require("axios").default;
@@ -278,6 +261,7 @@ app.get("/api/movie/trendingWeek", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(films);
     })
@@ -307,6 +291,7 @@ app.get("/api/movie/topRated", (req, resp) => {
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
         backdrop_img: imgb + elem.backdrop_path,
+        desc: elem.overview,
       }));
       resp.send(films);
     })
@@ -377,29 +362,9 @@ app.get("/api/movie/ricercaTitolo", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
       resp.send(films);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-});
-
-app.get("/api/movie/collection", (req, resp) => {
-  const axios = require("axios").default;
-  axios
-    .get("https://api.themoviedb.org/3/genre/movie/list", {
-      params: {
-        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
-        language: "it-IT",
-      },
-    })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-
-      resp.send(response.data);
     })
     .catch(function (error) {
       // handle error
@@ -452,6 +417,7 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        desc: elem.overview,
       }));
 
       resp.send(movies);
