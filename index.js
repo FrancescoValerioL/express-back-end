@@ -1,7 +1,34 @@
 const { default: axios } = require("axios");
 const express = require("express");
+const res = require("express/lib/response");
 const app = express();
 const port = 2000;
+
+//SELECT TRAILER
+app.get("/api/movie/trailer", (req, resp) => {
+  const axios = require("axios").default;
+  const movie_id = req.query.movie_id;
+  let trailer = {
+    trailer_link: "https://www.youtube.com/embed?v=",
+  };
+  axios
+    .get(`https://api.themoviedb.org/3/movie/${movie_id}/videos`, {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+      },
+    })
+    .then(function (response) {
+      response.data.results.slice(0, 1).map((elem) => {
+        trailer.trailer_link += elem.key;
+      });
+      resp.send(trailer);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
 
 //MULTI SEARCH
 app.get("/api/tv/ricercaMulti", (req, resp) => {
@@ -71,7 +98,6 @@ app.get("/api/tv/ricercaTitolo", (req, resp) => {
 });
 app.get("/api/tv/popular", (req, resp) => {
   const axios = require("axios").default;
-  const titolo = req.query.titolo;
   let series = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -80,7 +106,6 @@ app.get("/api/tv/popular", (req, resp) => {
       params: {
         api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
         language: "it-IT",
-        query: titolo,
         page: 1,
         include_adult: false,
       },
@@ -151,6 +176,10 @@ app.get("/api/tv/trendingWeek", (req, resp) => {
         release_date: elem.release_date,
       }));
       resp.send(films);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
     });
 });
 app.get("/api/tv/ricercaperGenere", (req, resp) => {
@@ -172,7 +201,7 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
   genres.set("mistero", "9648");
   genres.set("news", "10763");
   genres.set("reality", "10764");
-  genres.set("fci-fi", "10765");
+  genres.set("sci-fi", "10765");
   genres.set("fantasy", "10765");
   genres.set("soap", "10766");
   genres.set("talk", "10767");
@@ -251,6 +280,9 @@ app.get("/api/movie/trendingWeek", (req, resp) => {
         release_date: elem.release_date,
       }));
       resp.send(films);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 });
 
@@ -277,6 +309,9 @@ app.get("/api/movie/topRated", (req, resp) => {
         backdrop_img: imgb + elem.backdrop_path,
       }));
       resp.send(films);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 });
 
