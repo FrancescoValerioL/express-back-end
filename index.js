@@ -10,7 +10,7 @@ app.get("/api/movie/trailer", (req, resp) => {
   const movie_id = req.query.movie_id;
   resp.setHeader("Access-Control-Allow-Origin", "*");
   let trailer = {
-    trailer_link: "https://www.youtube.com/embed?v=",
+    trailer_link: "https://www.youtube.com/watch?v=",
   };
   axios
     .get(`https://api.themoviedb.org/3/movie/${movie_id}/videos`, {
