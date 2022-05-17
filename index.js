@@ -8,6 +8,7 @@ const port = 2000;
 app.get("/api/movie/trailer", (req, resp) => {
   const axios = require("axios").default;
   const movie_id = req.query.movie_id;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let trailer = {
     trailer_link: "https://www.youtube.com/embed?v=",
   };
@@ -34,6 +35,7 @@ app.get("/api/movie/trailer", (req, resp) => {
 app.get("/api/tv/ricercaMulti", (req, resp) => {
   const axios = require("axios").default;
   const titolo = req.query.titolo;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let found = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -69,6 +71,7 @@ app.get("/api/tv/ricercaMulti", (req, resp) => {
 app.get("/api/tv/ricercaTitolo", (req, resp) => {
   const axios = require("axios").default;
   const titolo = req.query.titolo;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let series = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -100,6 +103,7 @@ app.get("/api/tv/ricercaTitolo", (req, resp) => {
 });
 app.get("/api/tv/popular", (req, resp) => {
   const axios = require("axios").default;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let series = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -131,6 +135,7 @@ app.get("/api/tv/popular", (req, resp) => {
 app.get("/api/tv/topRated", (req, resp) => {
   const axios = require("axios").default;
   const titolo = req.query.titolo;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let series = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -163,6 +168,7 @@ app.get("/api/tv/topRated", (req, resp) => {
 app.get("/api/tv/trendingWeek", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let films = [];
   axios
     .get("https://api.themoviedb.org/3/trending/tv/week", {
@@ -192,6 +198,7 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre.toLowerCase();
   const img = "https://image.tmdb.org/t/p/w500";
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let series = [];
   let genres = new Map();
   genres.set("azione", "10759");
@@ -246,6 +253,7 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
 app.get("/api/movie/trendingWeek", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let films = [];
   axios
     .get("https://api.themoviedb.org/3/trending/movie/week", {
@@ -274,6 +282,7 @@ app.get("/api/movie/topRated", (req, resp) => {
   const axios = require("axios").default;
   const img = "https://image.tmdb.org/t/p/w500";
   const imgb = "https://image.tmdb.org/t/p/original";
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let films = [];
   axios
     .get("https://api.themoviedb.org/3/movie/top_rated", {
@@ -303,7 +312,7 @@ app.get("/api/movie/topRated", (req, resp) => {
 app.get("/api/movie/datiFilm", (req, resp) => {
   const axios = require("axios").default;
   const idFilm = req.query.idFilm;
-
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   const dati = {
     title: "",
     original_title: "",
@@ -342,6 +351,7 @@ app.get("/api/movie/datiFilm", (req, resp) => {
 app.get("/api/movie/ricercaTitolo", (req, resp) => {
   const axios = require("axios").default;
   const titolo = req.query.titolo;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let films = [];
   const img = "https://image.tmdb.org/t/p/w500";
 
@@ -377,6 +387,7 @@ app.get("/api/movie/ricercaPerGenere", (req, resp) => {
   const selectedPage = req.query.page;
   const selectedGenre = req.query.genre.toLowerCase();
   const img = "https://image.tmdb.org/t/p/w500";
+  resp.setHeader("Access-Control-Allow-Origin", "*");
   let genres = new Map();
   genres.set("azione", "28");
   genres.set("avventura", "12");
