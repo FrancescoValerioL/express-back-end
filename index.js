@@ -4,6 +4,74 @@ const res = require("express/lib/response");
 const app = express();
 const port = 2000;
 
+//NOTIFICHE PLACEHOLDER
+app.get("/api/movie/notificePlaceholder", (req, resp) => {
+  const axios = require("axios").default;
+  const page = 1 + Math.floor(Math.random() * 10);
+  resp.setHeader("Access-Control-Allow-Origin", "*");
+  let found = [];
+  const img = "https://image.tmdb.org/t/p/w500";
+  axios
+    .get("https://api.themoviedb.org/3/discover/movie", {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        page: page,
+        include_adult: false,
+        include_video: true,
+      },
+    })
+    .then(function (response) {
+      found = response.data.results.slice(0, 5).map((elem) => ({
+        title: elem.name,
+        title: elem.title,
+        id: elem.id,
+        img: img + elem.backdrop_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+        desc: elem.overview,
+      }));
+      resp.send(found);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+app.get("/api/tv/notificePlaceholder", (req, resp) => {
+  const axios = require("axios").default;
+  const page = 1 + Math.floor(Math.random() * 10);
+  resp.setHeader("Access-Control-Allow-Origin", "*");
+  let found = [];
+  const img = "https://image.tmdb.org/t/p/w500";
+  axios
+    .get("https://api.themoviedb.org/3/discover/tv", {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+        page: page,
+        include_adult: false,
+        include_video: true,
+      },
+    })
+    .then(function (response) {
+      found = response.data.results.slice(0, 5).map((elem) => ({
+        title: elem.name,
+
+        id: elem.id,
+        img: img + elem.poster_path,
+        genre_ids: elem.genre_ids,
+        release_date: elem.release_date,
+        desc: elem.overview,
+      }));
+      resp.send(found);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
 //SELECT TRAILER
 app.get("/api/movie/trailer", (req, resp) => {
   const axios = require("axios").default;
