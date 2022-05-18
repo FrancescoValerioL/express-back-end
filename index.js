@@ -61,7 +61,7 @@ app.get("/api/tv/notificePlaceholder", (req, resp) => {
         id: elem.id,
         img: img + elem.backdrop_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(found);
