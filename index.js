@@ -149,6 +149,7 @@ app.get("/api/tv/ricercaMulti", (req, resp) => {
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
         release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(found);
@@ -183,7 +184,7 @@ app.get("/api/tv/ricercaTitolo", (req, resp) => {
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(series);
@@ -214,7 +215,7 @@ app.get("/api/tv/popular", (req, resp) => {
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(series);
@@ -247,7 +248,7 @@ app.get("/api/tv/topRated", (req, resp) => {
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(series);
@@ -275,7 +276,7 @@ app.get("/api/tv/trendingWeek", (req, resp) => {
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(films);
@@ -329,7 +330,7 @@ app.get("/api/tv/ricercaperGenere", (req, resp) => {
         id: elem.id,
         img: img + elem.poster_path,
         genre_ids: elem.genre_ids,
-        release_date: elem.release_date,
+        release_date: elem.first_air_date,
         desc: elem.overview,
       }));
       resp.send(series);
