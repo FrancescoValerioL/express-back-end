@@ -30,7 +30,31 @@ app.get("/api/movie/trailer", (req, resp) => {
       console.log(error);
     });
 });
-
+app.get("/api/tv/trailer", (req, resp) => {
+  const axios = require("axios").default;
+  const movie_id = req.query.movie_id;
+  resp.setHeader("Access-Control-Allow-Origin", "*");
+  let trailer = {
+    trailer_link: "https://www.youtube.com/watch?v=",
+  };
+  axios
+    .get(`https://api.themoviedb.org/3/tv/${movie_id}/videos`, {
+      params: {
+        api_key: "205712c8b4bad38dc18a8f9c83c0f88e",
+        language: "it-IT",
+      },
+    })
+    .then(function (response) {
+      response.data.results.slice(0, 1).map((elem) => {
+        trailer.trailer_link += elem.key;
+      });
+      resp.send(trailer);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
 //MULTI SEARCH
 app.get("/api/tv/ricercaMulti", (req, resp) => {
   const axios = require("axios").default;
